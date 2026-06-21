@@ -1,0 +1,59 @@
+#import required files
+import yfinance as yf
+import pandas as pd
+import numpy as np
+import matplotlib
+from datetime import datetime, timedelta
+from matplotlib import pyplot as plt
+from matplotlib import dates as md
+
+
+#define tickers for the companies
+tickers = ['AAPL', 'MSFT', 'GOOGL']
+
+#define end date and start date to establish timeline
+end_date = datetime.today()
+start_date = end_date - timedelta(days = 6*30) #assuming each month has 30 days
+
+#dowload the data
+df1 = yf.download(tickers[0], start = start_date, end = end_date)
+df2 = yf.download(tickers[1], start = start_date, end = end_date)
+df3 = yf.download(tickers[2], start = start_date, end = end_date)
+
+#define function to calculate daily returns
+def daily_return(openp, closep):
+    daily_return = (closep-openp)/openp
+    return daily_return
+
+#Calculate daily returns of each stock
+df1['Daily Return'] = daily_return(df1['Open'], df1['Adj Close'])
+df2['Daily Return'] = daily_return(df2['Open'], df2['Adj Close'])
+df3['Daily Return'] = daily_return(df3['Open'], df3['Adj Close'])
+
+#calculating the portfolio's daily return
+p_returns = df1['Daily Return']*(1/3)+df2['Daily Return']*(1/3)+df3['Daily Return']*(1/3)
+
+#plotting the portfolio's daily return
+plt.plot(p_returns, color = 'g', marker = '.')
+months = md.MonthLocator(interval = 1, bymonthday = 1)
+plt.gca().xaxis.set_major_locator(months)
+plt.gca().xaxis.set_major_formatter(md.DateFormatter('%Y-%m-%d'))
+plt.xticks(rotation = 45, ha='right')
+plt.title("Portfolio's Daily Return", fontsize = 18)
+plt.xlabel('Date (YYYY-MM-DD)', fontsize = 14)
+plt.ylabel('Returns', fontsize = 14)
+matplotlib.rc('xtick', labelsize = 11)
+matplotlib.rc('ytick', labelsize = 11)
+plt.show()
+
+#calculating the value of the portfolio
+units1 = (10000/3)/(df1['Open'].values[0])  #calculating the number of units of each stock
+units2 = (10000/3)/(df2['Open'].values[0])
+units3 = (10000/3)/(df3['Open'].values[0])
+fp1 = units1*(df1['Adj Close'].values[-1])  #calculating the final value of each stock
+fp2 = units2*(df2['Adj Close'].values[-1])
+fp3 = units3*(df3['Adj Close'].values[-1])
+total_value = fp1 + fp2 + fp3
+print('')
+print("The total value of the portfolio after 6 months is : ")
+print('$'+ str(total_value[0]))

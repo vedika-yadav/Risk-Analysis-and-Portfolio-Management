@@ -1,0 +1,35 @@
+#import required files
+import yfinance as yf
+import pandas as pd
+import numpy as np
+import os
+import matplotlib
+from datetime import datetime, timedelta
+from matplotlib import pyplot as plt
+from matplotlib import dates as md
+
+#define ticker for Apple Inc.
+ticker = 'AAPL'
+
+#define end date and start date to establish timeline
+end_date = datetime.today()
+start_date = end_date - timedelta(days = 365)
+
+#download the data
+DataFrame = yf.download(ticker, start = start_date, end = end_date)
+
+#plot the closing prices from the data
+plt.plot(DataFrame['Close'], marker =  '.', color = 'g')
+months = md.MonthLocator(interval = 1, bymonthday = 1)
+plt.gca().xaxis.set_major_locator(months)
+plt.gca().xaxis.set_major_formatter(md.DateFormatter('%Y-%m-%d'))
+plt.xticks(rotation = 45, ha='right')
+plt.title('Closing Prices of Apple Inc.', fontsize = 18)
+plt.xlabel('Date (YYYY-MM-DD)', fontsize = 14)
+plt.ylabel('Stock Prices (USD)', fontsize = 14)
+matplotlib.rc('xtick', labelsize = 11)
+matplotlib.rc('ytick', labelsize = 11)
+plt.show()
+print('')
+print("The closing prices of Apple Inc. showed an increase from December 2023 to December 2024.")
+print("The stock prices fell from January 2024 to May 2024 but they showed a sharp increase in the following months.")
