@@ -112,7 +112,7 @@ using **mplfinance** for financial chart visualization.
 ---
 
 <p align="center">
-<img src="assets/images/candlestick-patterns.png" width="850">
+<img src="assets/images/candlestick-detection.png" width="850">
 </p>
 
 ---
