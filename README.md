@@ -35,7 +35,7 @@ Implemented commonly used momentum and trend-following indicators including:
 ---
 
 <p align="center">
-<img src="assets/images/technical_indicators.png" width="850">
+<img src="assets/images/technical-indicators.png" width="850">
 </p>
 
 ---
@@ -55,7 +55,7 @@ The notebook includes:
 ---
 
 <p align="center">
-<img src="assets/images/efficient_frontier.png" width="700">
+<img src="assets/images/efficient-frontier.png" width="700">
 </p>
 
 ---
@@ -94,7 +94,7 @@ Analyzed portfolio-level performance using historical returns and evaluated vari
 ---
 
 <p align="center">
-<img src="assets/images/portfolio_analysis.png" width="850">
+<img src="assets/images/portfolio-analysis.png" width="850">
 </p>
 
 ---
@@ -112,7 +112,7 @@ using **mplfinance** for financial chart visualization.
 ---
 
 <p align="center">
-<img src="assets/images/candlestick_patterns.png" width="850">
+<img src="assets/images/candlestick-patterns.png" width="850">
 </p>
 
 ---
