@@ -1,0 +1,61 @@
+#import the required packages
+import yfinance as yf
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+def analyze_portfolio(tickers, weights, start_date, end_date) :
+    #defining nested function to calculate daily returns of each stock
+    def daily_return(openp, closep):
+        daily_return = (closep-openp)/openp
+        return daily_return 
+    #download data for each stock  
+    df1 = yf.download(tickers[0], start = start_date, end = end_date)
+    df2 = yf.download(tickers[1], start = start_date, end = end_date)
+    df3 = yf.download(tickers[2], start = start_date, end = end_date)
+    df4 = yf.download(tickers[3], start = start_date, end = end_date)
+    df5 = yf.download(tickers[4], start = start_date, end = end_date)
+
+    #calculate daily return for each stock
+    df1['Daily Return'] = daily_return(df1['Open'], df1['Adj Close'])
+    print('Daily Return of '+ tickers[0] + ' is :')
+    print(df1['Daily Return'])
+    df2['Daily Return'] = daily_return(df2['Open'], df2['Adj Close'])
+    print('Daily Return of '+ tickers[1] + ' is :')
+    print(df2['Daily Return'])
+    df3['Daily Return'] = daily_return(df3['Open'], df3['Adj Close'])
+    print('Daily Return of '+ tickers[2] + ' is :')
+    print(df3['Daily Return'])
+    df4['Daily Return'] = daily_return(df4['Open'], df4['Adj Close'])
+    print('Daily Return of '+ tickers[3] + ' is :')
+    print(df4['Daily Return'])
+    df5['Daily Return'] = daily_return(df5['Open'], df5['Adj Close'])
+    print('Daily Return of '+ tickers[4] + ' is :')
+    print(df5['Daily Return'])
+
+    #calculate the daily return of the portfolio
+    p_returns = df1['Daily Return']*weights[0]+df2['Daily Return']*weights[1]+df3['Daily Return']*weights[2]+df4['Daily Return']*weights[3]+df5['Daily Return']*weights[4]
+
+    #calculating the total value of the portfolio
+    units1 = (weights[0]*1000)/(df1['Open'].values[0])  #calculating the number of units of each stock
+    units2 = (weights[1]*1000)/(df2['Open'].values[0])
+    units3 = (weights[2]*1000)/(df3['Open'].values[0])
+    units4 = (weights[3]*1000)/(df4['Open'].values[0])
+    units5 = (weights[4]*1000)/(df5['Open'].values[0])
+    
+    fp1 = units1*(df1['Adj Close'].values[-1])  #calculating the final value of each stock
+    fp2 = units2*(df2['Adj Close'].values[-1])
+    fp3 = units3*(df3['Adj Close'].values[-1])
+    fp4 = units4*(df4['Adj Close'].values[-1])
+    fp5 = units5*(df5['Adj Close'].values[-1])
+    total_value = fp1 + fp2 + fp3 + fp4 + fp5
+    print('')
+    print("The total value of the portfolio at the end of the selected period is : ")
+    print('$'+ str(total_value[0]))
+
+analyze_portfolio(
+tickers=['AAPL', 'MSFT', 'GOOGL', 'TSLA', 'NVDA'],
+weights=[0.3, 0.2, 0.2, 0.2, 0.1],
+start_date='2023-01-01',
+end_date='2023-12-31'
+)
